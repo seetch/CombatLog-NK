@@ -1,0 +1,11 @@
+name: CombatLog
+version: "${pom.version}"
+main: xyz.minerune.combatlog.CombatLog
+api: 1.0.13
+author: seetch
+softdepend:
+  - API
+
+permissions:
+  combatlog.bypass:
+    default: op
