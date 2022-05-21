@@ -9,11 +9,11 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.player.*;
 import cn.nukkit.plugin.PluginBase;
-import xyz.minerune.api.utils.Message;
+import me.hteppl.tools.format.Message;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-// TODO: Check Gamemode from RuneGamemode.
+// TODO: Check Gamemode from GamemodeManager.
 public class CombatLog extends PluginBase implements Listener {
 
     @Override
@@ -21,7 +21,7 @@ public class CombatLog extends PluginBase implements Listener {
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
-    private ConcurrentHashMap<Player, CombatHandler> players = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Player, CombatHandler> players = new ConcurrentHashMap<>();
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
@@ -75,7 +75,7 @@ public class CombatLog extends PluginBase implements Listener {
 
         if (combatHandler != null) {
             if (combatHandler.isInCombat()) {
-                if (player.hasPermission("")) {
+                if (player.hasPermission("combatlog.bypass")) {
                     return;
                 }
 
@@ -118,7 +118,7 @@ public class CombatLog extends PluginBase implements Listener {
             CombatHandler combatHandler = players.get(player);
             if (combatHandler != null) {
                 if (combatHandler.isInCombat()) {
-                    if (player.hasPermission("")) {
+                    if (player.hasPermission("combatlog.bypass")) {
                         return;
                     }
 

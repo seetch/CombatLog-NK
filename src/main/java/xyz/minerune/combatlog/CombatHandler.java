@@ -2,8 +2,8 @@ package xyz.minerune.combatlog;
 
 import cn.nukkit.Player;
 import cn.nukkit.scheduler.TaskHandler;
-import xyz.minerune.api.string.StringTools;
-import xyz.minerune.api.utils.Message;
+import me.hteppl.tools.format.Message;
+import me.hteppl.tools.string.StringTools;
 
 public class CombatHandler {
 
@@ -42,7 +42,7 @@ public class CombatHandler {
                 return;
             }
 
-            player.sendTip(Message.yellow("Режим боя закончится через %0.", StringTools.getPluralForm(combatTimeLeft, "секунду", "секунды", "секунд", true)));
+            player.sendTip(Message.yellow("Режим боя закончится через %0.", StringTools.getFullPluralForm(combatTimeLeft, "секунду", "секунды", "секунд")));
             combatTimeLeft--;
         }, 20);
 
