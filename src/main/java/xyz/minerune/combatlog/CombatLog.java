@@ -9,7 +9,7 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.player.*;
 import cn.nukkit.plugin.PluginBase;
-import me.hteppl.tools.format.Message;
+import me.seetch.format.Format;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,10 +43,12 @@ public class CombatLog extends PluginBase implements Listener {
         if (damager instanceof Player && player instanceof Player) {
             if (!(((Player) damager).hasPermission("combatlog.bypass"))) {
                 players.get(damager).startCombat();
+                players.get(damager).setAttacker((Player) damager);
             }
 
             if (!(((Player) player).hasPermission("combatlog.bypass"))) {
                 players.get(player).startCombat();
+                players.get(damager).setAttacker((Player) damager);
             }
         } else if (damager instanceof EntityProjectile && player instanceof Player) {
             Entity shootingEntity = ((EntityProjectile) damager).shootingEntity;
@@ -54,10 +56,12 @@ public class CombatLog extends PluginBase implements Listener {
             if (shootingEntity instanceof Player) {
                 if (!(((Player) shootingEntity).hasPermission("combatlog.bypass"))) {
                     players.get(shootingEntity).startCombat();
+                    players.get(shootingEntity).setAttacker((Player) shootingEntity);
                 }
 
                 if (!(((Player) player).hasPermission("combatlog.bypass"))) {
                     players.get(player).startCombat();
+                    players.get(player).setAttacker((Player) shootingEntity);
                 }
             }
         }
@@ -85,7 +89,7 @@ public class CombatLog extends PluginBase implements Listener {
                         continue;
                     }
 
-                    onlinePlayer.sendMessage(Message.red("Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
+                    onlinePlayer.sendMessage(Format.RED.message("Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
                 }
             }
         }
@@ -123,7 +127,7 @@ public class CombatLog extends PluginBase implements Listener {
                     }
 
                     event.setCancelled();
-                    player.sendMessage(Message.red("Вы не можете использовать команды во время боя."));
+                    player.sendMessage(Format.RED.message("Вы не можете использовать команды во время боя."));
                 }
             }
         }

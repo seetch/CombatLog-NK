@@ -2,18 +2,22 @@ package xyz.minerune.combatlog;
 
 import cn.nukkit.Player;
 import cn.nukkit.scheduler.TaskHandler;
-import me.hteppl.tools.format.Message;
+import lombok.Getter;
 import me.hteppl.tools.string.StringTools;
+import me.seetch.format.Format;
 
 public class CombatHandler {
 
     private CombatLog plugin;
     private Player player;
+    @Getter
     private boolean inCombat = false;
 
     private int combatTimeLeft;
     private int combatTimeout = 20;
     private TaskHandler combatTickTask = null;
+
+    public Player attacker;
 
     public CombatHandler(CombatLog plugin, Player player, boolean inCombat) {
         this.plugin = plugin;
@@ -21,13 +25,17 @@ public class CombatHandler {
         this.inCombat = inCombat;
     }
 
-    public boolean isInCombat() {
-        return inCombat;
+    public void setAttacker(Player attacker) {
+        this.attacker = attacker;
     }
 
     public void startCombat() {
         if (!isInCombat()) {
-            player.sendTip(Message.gold("Вы вошли в режим боя."));
+            if (attacker != null){
+                player.sendMessage(Format.RED.message("Вы были атакованы %0. §7[Не выходите из игры.]", attacker.getName()));
+            }else{
+                player.sendMessage(Format.RED.message("Вы вошли в режим боя. §7[Не выходите из игры.]"));
+            }
         }
 
         combatTimeLeft = combatTimeout;
@@ -42,7 +50,7 @@ public class CombatHandler {
                 return;
             }
 
-            player.sendTip(Message.yellow("Режим боя закончится через %0.", StringTools.getFullPluralForm(combatTimeLeft, "секунду", "секунды", "секунд")));
+            player.sendTip(Format.YELLOW.message("Режим боя закончится через %0.", StringTools.getFullPluralForm(combatTimeLeft, "секунду", "секунды", "секунд")));
             combatTimeLeft--;
         }, 20);
 
@@ -57,10 +65,11 @@ public class CombatHandler {
         combatTickTask = null;
 
         if (player.isConnected()) {
-            player.sendTip(Message.gold("Режим боя окончился."));
+            player.sendTip(Format.GREEN.message("Режим боя окончился."));
         }
 
         inCombat = false;
+        attacker = null;
     }
 
     public void reset() {

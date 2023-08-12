@@ -9,7 +9,10 @@
     <version>1.0.1</version>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
@@ -22,21 +25,29 @@
                     <include>plugin.yml</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources/</directory>
+                <targetPath>.</targetPath>
+                <includes>
+                    <include>config.yml</include>
+                </includes>
+            </resource>
         </resources>
+        <defaultGoal>clean package</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.10.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.4.1</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
                 </configuration>
@@ -46,33 +57,41 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>org.powernukkit:powernukkit:1.6.0.1-PN</exclude>
-                                </excludes>
-                            </artifactSet>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
-            <groupId>org.powernukkit</groupId>
-            <artifactId>powernukkit</artifactId>
-            <version>1.6.0.1-PN</version>
+            <groupId>cn.powernukkitx</groupId>
+            <artifactId>powernukkitx</artifactId>
+            <version>1.20.10-r1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.hteppl.tools</groupId>
+            <groupId>com.github.seetch</groupId>
+            <artifactId>Format</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.seetch</groupId>
             <artifactId>NukkitTools</artifactId>
-            <version>2.1.0.0-CUSTOM</version>
-            <systemPath>${project.basedir}/lib/NukkitTools-2.1.0.0-CUSTOM.jar</systemPath>
-            <scope>system</scope>
+            <version>2.1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>
