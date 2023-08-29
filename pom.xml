@@ -6,7 +6,7 @@
 
     <groupId>xyz.minerune.combatlog</groupId>
     <artifactId>CombatLog</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.seetch</groupId>
             <artifactId>Format</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.seetch</groupId>

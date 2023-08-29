@@ -1,6 +1,8 @@
 package xyz.minerune.combatlog;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.command.defaults.GamemodeCommand;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.event.EventHandler;
@@ -13,7 +15,6 @@ import me.seetch.format.Format;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-// TODO: Check Gamemode from GamemodeManager.
 public class CombatLog extends PluginBase implements Listener {
 
     @Override
@@ -22,6 +23,10 @@ public class CombatLog extends PluginBase implements Listener {
     }
 
     private final ConcurrentHashMap<Player, CombatHandler> players = new ConcurrentHashMap<>();
+
+    private boolean isCreative(Player player) {
+        return player.getGamemode() == 1;
+    }
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
@@ -41,6 +46,10 @@ public class CombatLog extends PluginBase implements Listener {
         }
 
         if (damager instanceof Player && player instanceof Player) {
+            if (isCreative((Player) damager) || isCreative((Player) player)){
+                return;
+            }
+
             if (!(((Player) damager).hasPermission("combatlog.bypass"))) {
                 players.get(damager).startCombat();
                 players.get(damager).setAttacker((Player) damager);
@@ -54,6 +63,10 @@ public class CombatLog extends PluginBase implements Listener {
             Entity shootingEntity = ((EntityProjectile) damager).shootingEntity;
 
             if (shootingEntity instanceof Player) {
+                if (isCreative((Player) damager) || isCreative((Player) shootingEntity)){
+                    return;
+                }
+
                 if (!(((Player) shootingEntity).hasPermission("combatlog.bypass"))) {
                     players.get(shootingEntity).startCombat();
                     players.get(shootingEntity).setAttacker((Player) shootingEntity);
