@@ -1,8 +1,6 @@
 package xyz.minerune.combatlog;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
-import cn.nukkit.command.defaults.GamemodeCommand;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.event.EventHandler;
@@ -46,7 +44,7 @@ public class CombatLog extends PluginBase implements Listener {
         }
 
         if (damager instanceof Player && player instanceof Player) {
-            if (isCreative((Player) damager) || isCreative((Player) player)){
+            if (isCreative((Player) damager) || isCreative((Player) player)) {
                 return;
             }
 
@@ -63,7 +61,7 @@ public class CombatLog extends PluginBase implements Listener {
             Entity shootingEntity = ((EntityProjectile) damager).shootingEntity;
 
             if (shootingEntity instanceof Player) {
-                if (isCreative((Player) damager) || isCreative((Player) shootingEntity)){
+                if (isCreative((Player) damager) || isCreative((Player) shootingEntity)) {
                     return;
                 }
 
@@ -102,7 +100,7 @@ public class CombatLog extends PluginBase implements Listener {
                         continue;
                     }
 
-                    onlinePlayer.sendMessage(Format.RED.message("Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
+                    onlinePlayer.sendMessage(Format.YELLOW.colorize("Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
                 }
             }
         }
@@ -140,7 +138,7 @@ public class CombatLog extends PluginBase implements Listener {
                     }
 
                     event.setCancelled();
-                    player.sendMessage(Format.RED.message("Вы не можете использовать команды во время боя."));
+                    player.sendMessage(Format.MATERIAL_REDSTONE.colorize("Вы не можете использовать команды во время боя."));
                 }
             }
         }

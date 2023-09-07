@@ -32,9 +32,9 @@ public class CombatHandler {
     public void startCombat() {
         if (!isInCombat()) {
             if (attacker != null){
-                player.sendMessage(Format.RED.message("Вы были атакованы %0. §7[Не выходите из игры.]", attacker.getName()));
+                player.sendMessage(Format.RED.colorize("Вы были атакованы %0. §7[Не выходите из игры]", attacker.getName()));
             }else{
-                player.sendMessage(Format.RED.message("Вы вошли в режим боя. §7[Не выходите из игры.]"));
+                player.sendMessage(Format.RED.colorize("Вы вошли в режим боя. §7[Не выходите из игры]"));
             }
         }
 
@@ -50,7 +50,7 @@ public class CombatHandler {
                 return;
             }
 
-            player.sendTip(Format.YELLOW.message("Режим боя закончится через %0.", StringTools.getFullPluralForm(combatTimeLeft, "секунду", "секунды", "секунд")));
+            player.sendTip(Format.YELLOW.colorize("Режим боя закончится через %0.", StringTools.getFullPluralForm(combatTimeLeft, "секунду", "секунды", "секунд")));
             combatTimeLeft--;
         }, 20);
 
@@ -65,7 +65,7 @@ public class CombatHandler {
         combatTickTask = null;
 
         if (player.isConnected()) {
-            player.sendTip(Format.GREEN.message("Режим боя окончился."));
+            player.sendTip(Format.GREEN.colorize("Режим боя окончился."));
         }
 
         inCombat = false;
