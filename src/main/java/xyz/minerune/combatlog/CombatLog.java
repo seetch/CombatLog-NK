@@ -100,7 +100,7 @@ public class CombatLog extends PluginBase implements Listener {
                         continue;
                     }
 
-                    onlinePlayer.sendMessage(Format.YELLOW.colorize("Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
+                    onlinePlayer.sendMessage(Format.YELLOW.colorize("\uE110", "Игрок %0 покинул игру во время боя и был наказан.", player.getName()));
                 }
             }
         }
@@ -138,7 +138,7 @@ public class CombatLog extends PluginBase implements Listener {
                     }
 
                     event.setCancelled();
-                    player.sendMessage(Format.MATERIAL_REDSTONE.colorize("Вы не можете использовать команды во время боя."));
+                    player.sendMessage(Format.RED.colorize("\uE112", "Вы не можете использовать команды во время боя."));
                 }
             }
         }
